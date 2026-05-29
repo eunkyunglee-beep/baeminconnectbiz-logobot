@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>배민커넥트비즈 로고생성기 — 쉽고 간단하게 원하는 로고를 만들어요</title>
+<title>BAEMINCONNECT BIZ — 배민커넥트비즈를 위한 로고 생성기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Hahmlet:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Bebas+Neue&family=Oswald:wght@700&family=Teko:wght@700&family=Barlow+Condensed:wght@900&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
@@ -150,11 +150,12 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 </head>
 <body>
 <header>
-  <span class="wm">배민커넥트비즈</span>
+  <span class="wm">BAEMINCONNECT BIZ</span>
   <div class="dv"></div>
-  <span class="ws">쉽고 간단하게 원하는 로고를 만들어요</span>
+  <span class="ws">배민커넥트비즈를 위한 로고 생성기</span>
   <div class="page-tabs">
     <button class="ptab active" onclick="switchPage('maker')">✏️ 로고 만들기</button>
+    <button class="ptab" onclick="switchPage('template')">⚡ 템플릿</button>
     <button class="ptab" onclick="switchPage('gallery')">🖼 갤러리</button>
   </div>
 </header>
@@ -309,14 +310,21 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
     <div>
       <div class="sec">크기 / 간격</div>
+      <!-- 기본 슬라이더 (항상 노출) -->
       <div style="display:flex;flex-direction:column;gap:8px">
         <div class="fg"><label>브랜드 이름 크기</label><div class="sr"><input type="range" id="s-kr" min="16" max="90" value="52"><span class="sv" id="v-kr">52</span></div></div>
         <div class="fg"><label>서브 이름 크기</label><div class="sr"><input type="range" id="s-en" min="10" max="60" value="28"><span class="sv" id="v-en">28</span></div></div>
+        <div class="fg"><label>요소 간격</label><div class="sr"><input type="range" id="s-gap" min="0" max="40" value="10"><span class="sv" id="v-gap">10</span></div></div>
+      </div>
+      <!-- 고급 설정 (접기/펼치기) -->
+      <button id="adv-toggle" onclick="toggleAdv()" style="margin-top:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;padding:0;display:flex;align-items:center;gap:4px;letter-spacing:.5px">
+        <span id="adv-arrow" style="transition:transform .2s">▶</span> 고급 설정
+      </button>
+      <div id="adv-panel" style="display:none;margin-top:8px;display:flex;flex-direction:column;gap:8px;overflow:hidden;max-height:0;transition:max-height .3s ease">
         <div class="fg"><label>아이콘 크기</label><div class="sr"><input type="range" id="s-ic" min="16" max="90" value="44"><span class="sv" id="v-ic">44</span></div></div>
         <div class="fg"><label>아이콘 ↔ 텍스트 간격</label><div class="sr"><input type="range" id="s-icgap" min="0" max="40" value="10"><span class="sv" id="v-icgap">10</span></div></div>
         <div class="fg"><label>브랜드 이름 자간</label><div class="sr"><input type="range" id="s-ls" min="-2" max="24" value="2"><span class="sv" id="v-ls">2</span></div></div>
         <div class="fg"><label>서브 이름 자간</label><div class="sr"><input type="range" id="s-ls2" min="-2" max="24" value="4"><span class="sv" id="v-ls2">4</span></div></div>
-        <div class="fg"><label>텍스트 간격</label><div class="sr"><input type="range" id="s-gap" min="0" max="40" value="10"><span class="sv" id="v-gap">10</span></div></div>
         <div class="fg"><label>캔버스 너비</label><div class="sr"><input type="range" id="s-w" min="300" max="800" value="480"><span class="sv" id="v-w">480</span></div></div>
         <div class="fg"><label>캔버스 높이</label><div class="sr"><input type="range" id="s-h" min="120" max="500" value="200"><span class="sv" id="v-h">200</span></div></div>
       </div>
@@ -330,6 +338,35 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
   <!-- 캔버스 -->
   <div class="canvas">
+    <!-- 로고 텍스트 입력 — 미리보기 바로 위 -->
+    <div style="display:flex;flex-direction:column;gap:6px;width:100%;max-width:640px">
+      <div style="display:flex;gap:8px">
+        <div style="flex:1;position:relative">
+          <input type="text" id="canvas-kr-text" value="번개배달단"
+            placeholder="브랜드 이름 (한글)"
+            style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:15px;padding:9px 13px;outline:none;transition:border-color .2s;box-sizing:border-box"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"
+            oninput="syncText('kr', this.value)"
+          >
+          <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--muted);pointer-events:none">한글</span>
+        </div>
+        <div style="flex:1;position:relative">
+          <input type="text" id="canvas-en-text" value="THUNDER CREW"
+            placeholder="서브 텍스트 (영문)"
+            style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:15px;padding:9px 13px;outline:none;transition:border-color .2s;box-sizing:border-box"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"
+            oninput="syncText('en', this.value)"
+          >
+          <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--muted);pointer-events:none">영문</span>
+        </div>
+      </div>
+      <input type="text" id="canvas-sl-text" value=""
+        placeholder="슬로건 (선택 · 작게 표시돼요)"
+        style="width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:13px;padding:7px 13px;outline:none;transition:border-color .2s;box-sizing:border-box"
+        onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"
+        oninput="syncText('sl', this.value)"
+      >
+    </div>
     <div class="bgtoggle">
       <button class="bgt active" onclick="setBg(this,'#ffffff')">흰 배경</button>
       <button class="bgt" onclick="setBg(this,'#111111')">검정 배경</button>
@@ -340,11 +377,11 @@ input[type=range]{width:100%;accent-color:var(--accent)}
       <svg id="logo-svg" width="480" height="200" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
     <div class="dlrow">
-      <button class="dlb svgb" onclick="dlPDF()">↓ PDF (outline)</button>
-      <button class="dlb" onclick="dlSVGRaw()">↓ SVG 편집용</button>
-      <button class="dlb" onclick="dlPNG()">↓ PNG</button>
+      <button class="dlb svgb" onclick="dlPNG()">↓ PNG 저장</button>
+      <!-- ⑤ 클립보드 복사 버튼 -->
+      <button class="dlb" onclick="copyToClipboard()" id="copy-btn">📋 클립보드 복사</button>
     </div>
-    <p class="hint">PDF — 텍스트 outline, 색상 편집 가능 · SVG 편집용 — 폰트 설치 필요</p>
+    <p class="hint">PNG — 투명 배경 · 1000px+ · 클립보드 — 카카오톡·슬랙에 바로 붙여넣기</p>
   </div>
 </div>
 
@@ -359,6 +396,15 @@ input[type=range]{width:100%;accent-color:var(--accent)}
     </div>
   </div>
   <div class="gallery-grid" id="gallery-grid"></div>
+</div>
+
+<!-- ── 템플릿 ── -->
+<div class="page" id="page-template">
+  <div class="gallery-header">
+    <span class="gallery-title">템플릿</span>
+    <span style="font-size:11px;color:var(--muted);margin-left:8px">클릭하면 바로 편집 시작</span>
+  </div>
+  <div class="gallery-grid" id="template-grid"></div>
 </div>
 
 <!-- 저장 모달 -->
@@ -376,90 +422,65 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 
 <script>
 const KR_FONTS=[
-  // ── Google Fonts (안정적, 폰트 embed 가능) ───────────────────
-  {name:'Black Han Sans', label:'검정한산스',  dl:'https://fonts.google.com/specimen/Black+Han+Sans', w:'', woff:''},
-  {name:'Hahmlet',        label:'함렛체',      dl:'https://fonts.google.com/specimen/Hahmlet',        w:'', woff:''},
-  {name:'Noto Sans KR',   label:'노토산스KR',  dl:'https://fonts.google.com/noto/specimen/Noto+Sans+KR', w:'', woff:''},
-  // ── 눈누 제목용 폰트 ─────────────────────────────────────────
-  {name:'Giants',         label:'자이언츠',
-   dl:'https://noonnu.cc/font_page/591',
-   woff:'',
-   w:'@font-face{font-family:"Giants";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2")format("woff2");font-weight:700;font-display:swap}'},
-  {name:'GMarketSans',    label:'G마켓산스',
-   dl:'https://noonnu.cc/font_page/366',
-   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff',
-   w:'@font-face{font-family:"GMarketSans";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")format("woff");font-weight:700;font-display:swap}'},
-  {name:'Pretendard',     label:'프리텐다드',
-   dl:'https://noonnu.cc/font_page/694',
-   woff:'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-bold.woff',
-   w:'@font-face{font-family:"Pretendard";src:url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-bold.woff2")format("woff2"),url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-bold.woff")format("woff");font-weight:700;font-display:swap}'},
-  {name:'Freesentation',  label:'프리젠테이션',
-   dl:'https://noonnu.cc/font_page/1369',
-   woff:'',
-   w:'@font-face{font-family:"Freesentation";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2")format("woff2");font-weight:900;font-display:swap}'},
-  {name:'Paperlogy',      label:'페이퍼로지',
-   dl:'https://noonnu.cc/font_page/1456',
-   woff:'',
-   w:'@font-face{font-family:"Paperlogy";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2")format("woff2");font-weight:800;font-display:swap}'},
-  {name:'NexonMaplestory',label:'메이플스토리',
-   dl:'https://noonnu.cc/font_page/95',
-   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff',
-   w:'@font-face{font-family:"NexonMaplestory";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff")format("woff");font-weight:700;font-display:swap}'},
-  {name:'CookieRun',      label:'쿠키런Bold',
-   dl:'https://noonnu.cc/font_page/591',
-   woff:'',
-   w:'@font-face{font-family:"CookieRun";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.1/CookieRun-Bold.woff2")format("woff2");font-weight:700;font-display:swap}'},
-  {name:'Binggrae',       label:'빙그레체',
-   dl:'https://noonnu.cc/font_page/6',
-   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff',
-   w:'@font-face{font-family:"Binggrae";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff")format("woff");font-weight:700;font-display:swap}'},
-  {name:'LotteMarDream',  label:'롯데마트드림',
-   dl:'https://noonnu.cc/font_page/1111',
-   woff:'',
-   w:'@font-face{font-family:"LotteMarDream";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/LotteMarDream-Bold.woff2")format("woff2");font-weight:700;font-display:swap}'},
-  {name:'PyeongChangPeace',label:'평창평화체',
-   dl:'https://noonnu.cc/font_page/586',
-   woff:'',
-   w:'@font-face{font-family:"PyeongChangPeace";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/PyeongChangPeace-Bold.woff2")format("woff2");font-weight:700;font-display:swap}'},
-  {name:'GimpoAirline',   label:'김포공항체',
-   dl:'https://noonnu.cc/font_page/1101',
-   woff:'',
-   w:'@font-face{font-family:"GimpoAirline";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/GimpoAirlineOTF.woff2")format("woff2");font-weight:normal;font-display:swap}'},
-  {name:'Vitro',          label:'비트로코어',
-   dl:'https://noonnu.cc/font_page/1108',
-   woff:'',
-   w:'@font-face{font-family:"Vitro";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/Vitro_Core.woff2")format("woff2");font-weight:normal;font-display:swap}'},
-  {name:'NanumSquareRound',label:'나눔스퀘어Round',
-   dl:'https://noonnu.cc/font_page/37',
-   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRoundEB.woff',
-   w:'@font-face{font-family:"NanumSquareRound";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRoundEB.woff")format("woff");font-weight:800;font-display:swap}'},
-  {name:'Cafe24Ssurround', label:'카페24써라운드',
-   dl:'https://noonnu.cc/font_page/388',
-   woff:'',
-   w:'@font-face{font-family:"Cafe24Ssurround";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff2")format("woff2");font-weight:normal;font-display:swap}'},
-  {name:'BMDOHYEON',      label:'BM도현체',
-   dl:'https://noonnu.cc/font_page/19',
-   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff',
-   w:'@font-face{font-family:"BMDOHYEON";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff")format("woff");font-weight:normal;font-display:swap}'},
-  {name:'DungGeunMo',     label:'둥근모꼴',
-   dl:'https://noonnu.cc/font_page/210',
-   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff',
-   w:'@font-face{font-family:"DungGeunMo";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff")format("woff");font-weight:normal;font-display:swap}'},
-  {name:'Paybooc',        label:'페이북',
-   dl:'https://noonnu.cc/font_page/494',
-   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2012@1.0/payboocExtraBold.woff',
-   w:'@font-face{font-family:"Paybooc";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2012@1.0/payboocExtraBold.woff")format("woff");font-weight:800;font-display:swap}'},
-  {name:'omyu_pretty',    label:'오뮤예쁜체',
-   dl:'https://noonnu.cc/font_page/1136',
-   woff:'',
-   w:'@font-face{font-family:"omyu_pretty";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2")format("woff2");font-weight:normal;font-display:swap}'},
+  // ── Google Fonts (w:'', gstatic URL로 fetch) ──────────────
+  {name:'Black Han Sans',label:'검정한산스',dl:'https://fonts.google.com/specimen/Black+Han+Sans',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/blackhansans/v17/ea8Aad44WunzF9a-dL6toA8r8nqVIXSkH-Hc.woff2'},
+  {name:'Hahmlet',       label:'함렛체',    dl:'https://fonts.google.com/specimen/Hahmlet',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/hahmlet/v13/BngXUXpCQ3nKpIo0TfPyfCdXfaeU4RjKAqoL.woff2'},
+  {name:'Noto Sans KR',  label:'노토산스KR', dl:'https://fonts.google.com/noto/specimen/Noto+Sans+KR',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/notosanskr/v36/PbykFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzzuoyeLTq8H4hfeE.woff2'},
+
+  // ── jsdelivr woff (opentype.js 직접 파싱 가능) ──────────────
+  {name:'GMarketSans',label:'G마켓산스',dl:'https://noonnu.cc/font_page/366',
+   w:'@font-face{font-family:"GMarketSans";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")format("woff");font-weight:700;font-display:swap}',
+   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff',gstatic:''},
+  {name:'NexonMaplestory',label:'메이플스토리',dl:'https://noonnu.cc/font_page/95',
+   w:'@font-face{font-family:"NexonMaplestory";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff")format("woff");font-weight:700;font-display:swap}',
+   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff',gstatic:''},
+  {name:'Binggrae',label:'빙그레체',dl:'https://noonnu.cc/font_page/6',
+   w:'@font-face{font-family:"Binggrae";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff")format("woff");font-weight:700;font-display:swap}',
+   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff',gstatic:''},
+  {name:'BMDOHYEON',label:'BM도현체',dl:'https://noonnu.cc/font_page/19',
+   w:'@font-face{font-family:"BMDOHYEON";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff")format("woff");font-weight:normal;font-display:swap}',
+   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff',gstatic:''},
+  {name:'NanumSquareRound',label:'나눔스퀘어Round',dl:'https://hangeul.naver.com/font',
+   w:'@font-face{font-family:"NanumSquareRound";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRoundEB.woff")format("woff");font-weight:800;font-display:swap}',
+   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRoundEB.woff',gstatic:''},
+  {name:'DungGeunMo',label:'둥근모꼴',dl:'https://noonnu.cc/font_page/210',
+   w:'@font-face{font-family:"DungGeunMo";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff")format("woff");font-weight:normal;font-display:swap}',
+   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff',gstatic:''},
+  {name:'Paybooc',label:'페이북',dl:'https://noonnu.cc/font_page/494',
+   w:'@font-face{font-family:"Paybooc";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2012@1.0/payboocExtraBold.woff")format("woff");font-weight:800;font-display:swap}',
+   woff:'https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2012@1.0/payboocExtraBold.woff',gstatic:''},
+
+  // ── jsdelivr woff2 (wawoff2 디코더로 파싱) ──────────────────
+  {name:'Giants',label:'자이언츠',dl:'https://noonnu.cc/font_page/591',
+   w:'@font-face{font-family:"Giants";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/Giants-Bold.woff2")format("woff2");font-weight:700;font-display:swap}',
+   woff:'',gstatic:''},
+  {name:'omyu_pretty',label:'오뮤예쁜체',dl:'https://noonnu.cc/font_page/1136',
+   w:'@font-face{font-family:"omyu_pretty";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2")format("woff2");font-weight:normal;font-display:swap}',
+   woff:'',gstatic:''},
+  {name:'Cafe24Ssurround',label:'카페24써라운드',dl:'https://noonnu.cc/font_page/388',
+   w:'@font-face{font-family:"Cafe24Ssurround";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff2")format("woff2");font-weight:normal;font-display:swap}',
+   woff:'',gstatic:''},
+  {name:'Ria',label:'리아체',dl:'https://noonnu.cc/font_page/1510',
+   w:'@font-face{font-family:"Ria";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/RiaSans-ExtraBold.woff2")format("woff2");font-weight:normal;font-display:swap}',
+   woff:'',gstatic:''},
+  {name:'PartialSansKR',label:'파셜산스',dl:'https://noonnu.cc/font_page/1186',
+   w:'@font-face{font-family:"PartialSansKR";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2")format("woff2");font-weight:normal;font-display:swap}',
+   woff:'',gstatic:''},
 ];
 const EN_FONTS=[
-  {name:'Bebas Neue',      label:'Bebas Neue',    dl:'https://fonts.google.com/specimen/Bebas+Neue',       w:'', woff:''},
-  {name:'Oswald',          label:'Oswald',         dl:'https://fonts.google.com/specimen/Oswald',           w:'', woff:''},
-  {name:'Teko',            label:'Teko',           dl:'https://fonts.google.com/specimen/Teko',             w:'', woff:''},
-  {name:'Barlow Condensed',label:'Barlow Cond',    dl:'https://fonts.google.com/specimen/Barlow+Condensed', w:'', woff:''},
-  {name:'Rajdhani',        label:'Rajdhani',       dl:'https://fonts.google.com/specimen/Rajdhani',         w:'', woff:''},
+  {name:'Bebas Neue',      label:'Bebas Neue',    dl:'https://fonts.google.com/specimen/Bebas+Neue',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/bebasneuepro/v6/ue5B_7dTGHIbR02k-lMbLTZ2HAdMXhIM.woff2'},
+  {name:'Oswald',          label:'Oswald',         dl:'https://fonts.google.com/specimen/Oswald',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/oswald/v53/TK3_WkUHHAIjg75cFRf3bXL8LICs1_Fp2Q.woff2'},
+  {name:'Teko',            label:'Teko',           dl:'https://fonts.google.com/specimen/Teko',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/teko/v20/LYjNdG7kmE0gdQhfgCF7Pg.woff2'},
+  {name:'Barlow Condensed',label:'Barlow Cond',    dl:'https://fonts.google.com/specimen/Barlow+Condensed',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/barlowcondensed/v12/HTxwL3I-JCGChYJ8VI-L6OO_au7B4-Lw4Q.woff2'},
+  {name:'Rajdhani',        label:'Rajdhani',       dl:'https://fonts.google.com/specimen/Rajdhani',
+   w:'',woff:'',gstatic:'https://fonts.gstatic.com/s/rajdhani/v19/LDI2apCSOBg7S-QT7pasEd-DGpU.woff2'},
 ];
 const ICONS_BASIC=[
   {id:'none',label:'없음',svg:null},
@@ -518,10 +539,10 @@ const LAYOUT_DEFAULTS = {
   'emblem':       {krSize:36,enSize:18,icSize:32,icgap:6, gap:6, W:300,H:300},
 };
 
-// ── 상태 ─────────────────────────────────────────────────────
+// ── 상태 ──────────────────────────────────────────────────────
 const S={
   krText:'번개배달단', enText:'THUNDER CREW', slText:'',
-  krFont:'Giants', enFont:'Bebas Neue',
+  krFont:'GMarketSans', enFont:'Bebas Neue',
   icon:null,
   layout:'stack',
   emblemShape:'hexagon', emblemStroke:4, emblemFill:'none',
@@ -532,13 +553,138 @@ const S={
   W:480, H:220, previewBg:'#ffffff'
 };
 
-// ── 페이지 전환 ───────────────────────────────────────────────
-function switchPage(name){
+// ── 템플릿 ───────────────────────────────────────────────────
+const TEMPLATES=[
+  {
+    id:'t1',
+    name:'번개배달단',
+    desc:'아이콘 상단 · 주황 컬러',
+    state:{
+      krText:'번개배달단', enText:'THUNDER CREW', slText:'',
+      krFont:'Giants', enFont:'Bebas Neue',
+      icon:{type:'builtin', id:'bolt'},
+      layout:'top-icon',
+      emblemShape:'hexagon', emblemStroke:4, emblemFill:'none',
+      emblemR:46, emblemRx:100, emblemRy:100, emblemCorner:20,
+      valign:'middle', halign:'center',
+      c1:'#E8440A', c2:'#7A1500', cb:'#ffffff', csl:'#aaaaaa',
+      krSize:52, enSize:28, icSize:49, icgap:4, ls:2, ls2:4, gap:9,
+      W:480, H:200, previewBg:'#ffffff'
+    }
+  },
+];
+const TKEY='babiz_tpl_thumbs_v1';
+function getTplThumbs(){try{return JSON.parse(localStorage.getItem(TKEY)||'{}')}catch{return{}}}
+function setTplThumbs(o){try{localStorage.setItem(TKEY,JSON.stringify(o))}catch{}}
+
+async function loadTemplates(){
+  const grid=document.getElementById('template-grid');
+  grid.innerHTML='';
+  const thumbs=getTplThumbs();
+  for(const tpl of TEMPLATES){
+    const card=document.createElement('div'); card.className='gallery-card tpl-card';
+    // 썸네일이 없으면 로고 렌더해서 생성
+    let thumb=thumbs[tpl.id]||'';
+    if(!thumb){
+      try{
+        const prev=JSON.parse(JSON.stringify(S)); // 현재 상태 백업
+        Object.assign(S, tpl.state);
+        // 아이콘 복원
+        if(tpl.state.icon && tpl.state.icon.type==='builtin'){
+          const all=[...ICONS_BASIC,...ICONS_DELIVERY,...ICONS_MOTION];
+          const ic=all.find(x=>x.id===tpl.state.icon.id);
+          S.icon=ic?{type:'builtin',id:ic.id,svg:ic.svg}:null;
+        }else{S.icon=null;}
+        render();
+        const canvas=await renderToCanvas(2,false);
+        thumb=canvas.toDataURL('image/png');
+        const saved=getTplThumbs(); saved[tpl.id]=thumb; setTplThumbs(saved);
+        // 상태 복원
+        Object.assign(S, prev);
+        if(prev.icon && prev.icon.type==='builtin'){
+          const all=[...ICONS_BASIC,...ICONS_DELIVERY,...ICONS_MOTION];
+          const ic=all.find(x=>x.id===prev.icon.id);
+          S.icon=ic?{type:'builtin',id:ic.id,svg:ic.svg}:null;
+        }else{S.icon=prev.icon||null;}
+        render();
+      }catch(e){console.warn('tpl thumb fail',e);}
+    }
+    card.innerHTML=`
+      <div class="gallery-card-preview" style="cursor:pointer" onclick="applyTemplate('${tpl.id}')">
+        ${thumb?`<img src="${thumb}" alt="${tpl.name}">`:'<span style="color:#555;font-size:12px">미리보기 생성 중...</span>'}
+      </div>
+      <div class="gallery-card-info">
+        <div class="gallery-card-name">${tpl.name}</div>
+        <div class="gallery-card-date">${tpl.desc}</div>
+        <div class="gallery-card-actions">
+          <button class="gc-btn" style="flex:1;border-color:var(--accent);color:var(--accent)" onclick="applyTemplate('${tpl.id}')">✏️ 이 템플릿으로 시작</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  }
+}
+
+function applyTemplate(id){
+  const tpl=TEMPLATES.find(t=>t.id===id);
+  if(!tpl)return;
+  // 상태 전체 교체
+  Object.assign(S, JSON.parse(JSON.stringify(tpl.state)));
+  // 아이콘 복원 (svg 포함)
+  if(tpl.state.icon && tpl.state.icon.type==='builtin'){
+    const all=[...ICONS_BASIC,...ICONS_DELIVERY,...ICONS_MOTION];
+    const ic=all.find(x=>x.id===tpl.state.icon.id);
+    S.icon=ic?{type:'builtin',id:ic.id,svg:ic.svg}:null;
+  }else{S.icon=null;}
+  // 캔버스 위 입력창 동기화
+  const ck=document.getElementById('canvas-kr-text');
+  const ce=document.getElementById('canvas-en-text');
+  const cs=document.getElementById('canvas-sl-text');
+  if(ck)ck.value=S.krText;
+  if(ce)ce.value=S.enText;
+  if(cs)cs.value=S.slText||'';
+  // 패널 입력창 동기화
+  ['kr-text','en-text','sl-text'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value=id==='kr-text'?S.krText:id==='en-text'?S.enText:S.slText||'';
+  });
+  // 색상 동기화
+  ['c1','c2','cb','csl'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value=S[id];
+  });
+  // 슬라이더 동기화
+  [['s-kr','v-kr','krSize'],['s-en','v-en','enSize'],['s-ic','v-ic','icSize'],
+   ['s-icgap','v-icgap','icgap'],['s-gap','v-gap','gap'],
+   ['s-w','v-w','W'],['s-h','v-h','H'],
+   ['s-ls','v-ls','ls'],['s-ls2','v-ls2','ls2']
+  ].forEach(([sid,vid,key])=>{
+    const el=document.getElementById(sid);
+    if(el){el.value=S[key];const ve=document.getElementById(vid);if(ve)ve.firstChild.textContent=S[key];}
+  });
+  // 레이아웃 버튼 활성화
+  document.querySelectorAll('.lb[data-layout]').forEach(b=>{
+    b.classList.toggle('active', b.dataset.layout===S.layout);
+  });
+  // 아이콘 버튼 활성화
+  document.querySelectorAll('.ib').forEach(b=>b.classList.remove('active'));
+  if(S.icon && S.icon.id){
+    const ib=document.querySelector(`.ib[data-id="${S.icon.id}"]`);
+    if(ib)ib.classList.add('active');
+  }
+  render();
+  switchPage('maker');
+  showToast(`✓ "${tpl.name}" 템플릿 적용 — 텍스트를 바꿔 나만의 로고를 만들어보세요!`);
+}
+function switchPage(n){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.ptab')[name==='maker'?0:1].classList.add('active');
-  if(name==='gallery') loadGallery();
+  document.getElementById('page-'+n).classList.add('active');
+  const tabs=['maker','template','gallery'];
+  const idx=tabs.indexOf(n);
+  const ptabs=document.querySelectorAll('.ptab');
+  if(idx>=0 && ptabs[idx])ptabs[idx].classList.add('active');
+  if(n==='gallery')loadGallery();
+  if(n==='template')loadTemplates();
 }
 
 // ── 갤러리 ───────────────────────────────────────────────────
@@ -554,24 +700,15 @@ function closeSaveModal(){document.getElementById('save-modal').classList.remove
 async function saveToGallery(){
   const name=document.getElementById('save-name').value.trim()||S.krText||'로고';
   closeSaveModal(); showToast('저장 중...');
-  const {W,H}=S;
-  const svgStr=getCleanSVG();
-  const blob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const thumb=await new Promise(res=>{
-    const img=new Image();
-    img.onload=()=>{
-      const c=document.createElement('canvas');c.width=W*2;c.height=H*2;
-      const ctx=c.getContext('2d');ctx.scale(2,2);
-      ctx.fillStyle=S.previewBg==='transparent'?'#ffffff':S.previewBg;
-      ctx.fillRect(0,0,W,H);ctx.drawImage(img,0,0,W,H);
-      URL.revokeObjectURL(url);res(c.toDataURL('image/png'));
-    };
-    img.onerror=()=>{URL.revokeObjectURL(url);res('')};
-    img.src=url;
-  });
+  const svg=getCleanSVG();
+  // 썸네일: renderToCanvas 사용 (폰트 깨짐 없음)
+  let thumb='';
+  try{
+    const canvas=await renderToCanvas(2, false);
+    thumb=canvas.toDataURL('image/png');
+  }catch(e){ console.warn('thumb 생성 실패:', e); }
   const items=getItems();
-  items.unshift({id:Date.now(),name,thumb,svgRaw:getCleanSVG(),date:new Date().toLocaleDateString('ko-KR')});
+  items.unshift({id:Date.now(),name,thumb,svgRaw:svg,date:new Date().toLocaleDateString('ko-KR')});
   if(items.length>100)items.splice(100);
   setItems(items); showToast('✓ 갤러리에 저장됐어요!');
 }
@@ -583,43 +720,29 @@ function loadGallery(){
   if(!items.length){grid.innerHTML='<div class="gallery-empty"><p>저장된 로고가 없어요</p><small>로고를 만들고 "갤러리에 저장" 버튼을 눌러보세요</small></div>';return;}
   items.forEach(item=>{
     const card=document.createElement('div'); card.className='gallery-card';
-    card.innerHTML=`<div class="gallery-card-preview">${item.thumb?`<img src="${item.thumb}" alt="${item.name}">`:'<span style="color:#555;font-size:12px">미리보기 없음</span>'}</div>
+    card.innerHTML=`<div class="gallery-card-preview">${item.thumb?`<img src="${item.thumb}" alt="${item.name}">`:''}</div>
       <div class="gallery-card-info"><div class="gallery-card-name">${item.name}</div><div class="gallery-card-date">${item.date}</div>
       <div class="gallery-card-actions">
         <button class="gc-btn" onclick="dlGalleryPNG(${item.id})">↓ PNG</button>
-        <button class="gc-btn" onclick="dlGallerySVG(${item.id})">↓ SVG</button>
         <button class="gc-btn del" onclick="delGallery(${item.id})">삭제</button>
       </div></div>`;
     grid.appendChild(card);
   });
 }
 function dlGalleryPNG(id){const i=getItems().find(x=>x.id===id);if(!i||!i.thumb)return;const a=document.createElement('a');a.href=i.thumb;a.download=i.name.replace(/\s+/g,'_')+'_logo.png';a.click();}
-function dlGallerySVG(id){const i=getItems().find(x=>x.id===id);if(!i||!i.svgRaw)return;const blob=new Blob([i.svgRaw],{type:'image/svg+xml'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=i.name.replace(/\s+/g,'_')+'_logo.svg';a.click();}
 function delGallery(id){setItems(getItems().filter(x=>x.id!==id));loadGallery();showToast('삭제됐어요');}
-function clearGallery(){if(!confirm('갤러리의 모든 로고를 삭제할까요?'))return;setItems([]);loadGallery();showToast('전체 삭제됐어요');}
-document.getElementById('gallery-search').addEventListener('input',()=>{
-  if(document.getElementById('page-gallery').classList.contains('active'))loadGallery();
-});
+function clearGallery(){if(!confirm('전체 삭제?'))return;setItems([]);loadGallery();showToast('전체 삭제됐어요');}
 
-// ── 폰트 주입 + 강제 로드 트리거 ─────────────────────────────
+document.getElementById('gallery-search').addEventListener('input',()=>{if(document.getElementById('page-gallery').classList.contains('active'))loadGallery();});
+
+// ── 폰트 주입 ────────────────────────────────────────────────
 function injectFonts(){
   let el=document.getElementById('_df');
   if(!el){el=document.createElement('style');el.id='_df';document.head.appendChild(el)}
   el.textContent=KR_FONTS.filter(f=>f.w).map(f=>f.w).join('\n');
   let trig=document.getElementById('_ft');
-  if(!trig){
-    trig=document.createElement('div');trig.id='_ft';
-    trig.setAttribute('aria-hidden','true');
-    trig.style.cssText='position:fixed;top:-9999px;left:-9999px;width:1px;overflow:hidden;opacity:0;pointer-events:none';
-    document.body.appendChild(trig);
-  }
-  KR_FONTS.forEach(f=>{
-    if(!f.w)return;
-    const sp=document.createElement('span');
-    sp.textContent='가나다라마바사';
-    sp.style.cssText=`font-family:'${f.name}',sans-serif;font-weight:700;font-size:1px`;
-    trig.appendChild(sp);
-  });
+  if(!trig){trig=document.createElement('div');trig.id='_ft';trig.setAttribute('aria-hidden','true');trig.style.cssText='position:fixed;top:-9999px;left:-9999px;width:1px;overflow:hidden;opacity:0;pointer-events:none';document.body.appendChild(trig);}
+  KR_FONTS.filter(f=>f.w).forEach(f=>{const sp=document.createElement('span');sp.textContent='가나다라마';sp.style.cssText=`font-family:'${f.name}',sans-serif;font-weight:700;font-size:1px`;trig.appendChild(sp);});
 }
 injectFonts();
 
@@ -627,43 +750,34 @@ injectFonts();
 function buildFontBtns(){
   const kg=document.getElementById('kr-grid');
   KR_FONTS.forEach((f,i)=>{
-    const b=document.createElement('button');
-    b.className='fb'+(i===0?' active':''); b.dataset.font=f.name;
+    const b=document.createElement('button');b.className='fb'+(i===0?' active':'');b.dataset.font=f.name;
     b.innerHTML=`<span style="font-family:'${f.name}',sans-serif;font-weight:700;font-size:14px">${f.label.slice(0,4)}</span><span class="fs">${f.label}</span>`;
     b.onclick=()=>{kg.querySelectorAll('.fb').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.krFont=f.name;render();};
     kg.appendChild(b);
-    checkFont(f.name, b);
+    // 폰트 로드 확인
+    document.fonts.load(`bold 20px "${f.name}"`, '가나다ABC').then(()=>{
+      if(!document.fonts.check(`bold 20px "${f.name}"`,'가나다ABC')){
+        b.style.opacity='0.38';const fs=b.querySelector('.fs');if(fs){fs.textContent='⚠로드실패';fs.style.color='#e05050';}
+      }
+    }).catch(()=>{});
   });
   const eg=document.getElementById('en-grid');
   EN_FONTS.forEach((f,i)=>{
-    const b=document.createElement('button');
-    b.className='fb'+(i===0?' active':'');
+    const b=document.createElement('button');b.className='fb'+(i===0?' active':'');
     b.innerHTML=`<span style="font-family:'${f.name}',sans-serif;font-weight:700;font-size:14px">${f.name.split(' ')[0]}</span><span class="fs">${f.label}</span>`;
     b.onclick=()=>{eg.querySelectorAll('.fb').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.enFont=f.name;render();};
     eg.appendChild(b);
   });
 }
-async function checkFont(name, btn){
-  try{
-    await document.fonts.load(`bold 20px "${name}"`, '가나다ABC');
-    if(!document.fonts.check(`bold 20px "${name}"`, '가나다ABC'))throw 0;
-    btn.style.opacity='1';
-  }catch(e){
-    btn.style.opacity='0.38'; btn.title=`${name} 로드 실패`;
-    const fs=btn.querySelector('.fs');
-    if(fs){fs.textContent='⚠ 로드실패';fs.style.color='#e05050';}
-  }
-}
-function buildIconBtns(icons,gridId){
-  const grid=document.getElementById(gridId);
+function buildIconBtns(icons,gid){
+  const grid=document.getElementById(gid);
   icons.forEach(ic=>{
-    const b=document.createElement('button');
-    b.className='ib'+(ic.svg===null?' none-ib':''); b.dataset.id=ic.id;
+    const b=document.createElement('button');b.className='ib'+(ic.svg===null?' none-ib':'');b.dataset.id=ic.id;
     b.innerHTML=ic.svg===null?(ic.label||'없음'):`<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">${ic.svg.replace(/FILL/g,S.c1)}</svg>`;
     b.onclick=()=>{document.querySelectorAll('.ib').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.icon=ic.svg===null?null:{type:'builtin',id:ic.id,svg:ic.svg};render();};
     grid.appendChild(b);
   });
-  if(gridId==='icon-basic')grid.children[0].classList.add('active');
+  if(gid==='icon-basic')grid.children[0].classList.add('active');
 }
 buildIconBtns(ICONS_BASIC,'icon-basic');
 buildIconBtns(ICONS_DELIVERY,'icon-delivery');
@@ -671,104 +785,36 @@ buildIconBtns(ICONS_MOTION,'icon-motion');
 buildFontBtns();
 document.getElementById('file-input').addEventListener('change',e=>{
   Array.from(e.target.files).forEach(file=>{
-    const reader=new FileReader();
-    reader.onload=ev=>{
+    const r=new FileReader();r.onload=ev=>{
       const data=ev.target.result;
-      const b=document.createElement('button'); b.className='ib';
+      const b=document.createElement('button');b.className='ib';
       b.innerHTML=`<img src="${data}" style="width:26px;height:26px;object-fit:contain">`;
       b.onclick=()=>{document.querySelectorAll('.ib').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.icon={type:'img',data};render();};
       document.getElementById('custom-icons-grid').appendChild(b);
-    };
-    reader.readAsDataURL(file);
+    };r.readAsDataURL(file);
   });
 });
 
-// ── 컨트롤 핸들러 ────────────────────────────────────────────
-function switchTab(btn,id){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active'); document.getElementById(id).classList.add('active');
-}
-function applyLayoutDefaults(layout){
-  const dd=LAYOUT_DEFAULTS[layout]; if(!dd)return; Object.assign(S,dd);
-  [['s-kr','v-kr','krSize'],['s-en','v-en','enSize'],['s-ic','v-ic','icSize'],
-   ['s-icgap','v-icgap','icgap'],['s-gap','v-gap','gap'],['s-w','v-w','W'],['s-h','v-h','H']
-  ].forEach(([sid,vid,key])=>{
-    const el=document.getElementById(sid); if(el&&dd[key]!==undefined){el.value=dd[key];const ve=document.getElementById(vid);if(ve)ve.firstChild.textContent=dd[key];}
-  });
-}
-function selLayout(btn){
-  document.querySelectorAll('.lb[data-layout]').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active'); S.layout=btn.dataset.layout;
-  document.getElementById('emblem-options').style.display=S.layout==='emblem'?'block':'none';
-  applyLayoutDefaults(S.layout); render();
-}
+// ── 컨트롤 ───────────────────────────────────────────────────
+function switchTab(btn,id){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.tab-panel').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById(id).classList.add('active');}
+function applyLayoutDefaults(layout){const dd=LAYOUT_DEFAULTS[layout];if(!dd)return;Object.assign(S,dd);[['s-kr','v-kr','krSize'],['s-en','v-en','enSize'],['s-ic','v-ic','icSize'],['s-icgap','v-icgap','icgap'],['s-gap','v-gap','gap'],['s-w','v-w','W'],['s-h','v-h','H']].forEach(([sid,vid,key])=>{const el=document.getElementById(sid);if(el&&dd[key]!==undefined){el.value=dd[key];const ve=document.getElementById(vid);if(ve)ve.firstChild.textContent=dd[key];}});}
+function selLayout(btn){document.querySelectorAll('.lb[data-layout]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.layout=btn.dataset.layout;document.getElementById('emblem-options').style.display=S.layout==='emblem'?'block':'none';applyLayoutDefaults(S.layout);render();}
 function selValign(btn){document.querySelectorAll('.lb[data-valign]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.valign=btn.dataset.valign;render();}
 function selHalign(btn){document.querySelectorAll('.lb[data-halign]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.halign=btn.dataset.halign;render();}
 function selEmblemShape(btn){document.querySelectorAll('#emblem-shape-grid .lb').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.emblemShape=btn.dataset.shape;render();}
 function selEmblemFill(btn,val){['emb-fill-none','emb-fill-solid','emb-fill-bg'].forEach(id=>document.getElementById(id).classList.remove('active'));btn.classList.add('active');S.emblemFill=val;render();}
-function setBg(btn,color){
-  document.querySelectorAll('.bgt').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
-  S.previewBg=color;
-  document.getElementById('frame').style.background=color==='transparent'?'repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/16px 16px':color;
-  render();
-}
-[['s-kr','v-kr','krSize'],['s-en','v-en','enSize'],['s-ic','v-ic','icSize'],
- ['s-icgap','v-icgap','icgap'],['s-ls','v-ls','ls'],['s-ls2','v-ls2','ls2'],['s-gap','v-gap','gap'],
- ['s-w','v-w','W'],['s-h','v-h','H'],['s-emb','v-emb','emblemStroke'],
- ['s-emb-r','v-emb-r','emblemR'],['s-emb-rx','v-emb-rx','emblemRx'],
- ['s-emb-ry','v-emb-ry','emblemRy'],['s-emb-corner','v-emb-corner','emblemCorner']
-].forEach(([sid,vid,key])=>{
-  const el=document.getElementById(sid); if(!el)return;
-  el.addEventListener('input',e=>{
-    S[key]=parseInt(e.target.value);
-    const ve=document.getElementById(vid); if(ve)ve.firstChild.textContent=e.target.value;
-    updateEmblemHints(); render();
-  });
-});
-['kr-text','en-text','sl-text'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',e=>{
-    if(id==='kr-text')S.krText=e.target.value;
-    else if(id==='en-text')S.enText=e.target.value;
-    else S.slText=e.target.value;
-    render();
-  });
-});
-['c1','c2','cb','csl'].forEach(id=>{
-  document.getElementById(id).addEventListener('input',e=>{S[id]=e.target.value;render();});
-});
-function updateEmblemHints(){
-  const baseR=Math.min(S.W,S.H)*(S.emblemR/100);
-  const rw=Math.round(baseR*(S.emblemRx/100)),rh=Math.round(baseR*(S.emblemRy/100));
-  const gcd=(a,b)=>b===0?a:gcd(b,a%b); const g=gcd(rw,rh);
-  const sh=document.getElementById('emb-size-hint'),rh2=document.getElementById('emb-ratio-hint'),ph=document.getElementById('emb-px-hint');
-  if(sh)sh.textContent=`캔버스 ${S.emblemR}%`; if(rh2)rh2.textContent=`${rw/g}:${rh/g}`; if(ph)ph.textContent=`${rw*2}×${rh*2}px`;
-}
-function resetEmblemSize(){
-  S.emblemR=46;S.emblemRx=100;S.emblemRy=100;
-  [['s-emb-r','v-emb-r','46'],['s-emb-rx','v-emb-rx','100'],['s-emb-ry','v-emb-ry','100']].forEach(([sid,vid,val])=>{
-    const el=document.getElementById(sid);if(el)el.value=val;
-    const ve=document.getElementById(vid);if(ve)ve.firstChild.textContent=val;
-  });
-  updateEmblemHints();render();
-}
+function setBg(btn,color){document.querySelectorAll('.bgt').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.previewBg=color;document.getElementById('frame').style.background=color==='transparent'?'repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/16px 16px':color;render();}
+[['s-kr','v-kr','krSize'],['s-en','v-en','enSize'],['s-ic','v-ic','icSize'],['s-icgap','v-icgap','icgap'],['s-ls','v-ls','ls'],['s-ls2','v-ls2','ls2'],['s-gap','v-gap','gap'],['s-w','v-w','W'],['s-h','v-h','H'],['s-emb','v-emb','emblemStroke'],['s-emb-r','v-emb-r','emblemR'],['s-emb-rx','v-emb-rx','emblemRx'],['s-emb-ry','v-emb-ry','emblemRy'],['s-emb-corner','v-emb-corner','emblemCorner']].forEach(([sid,vid,key])=>{const el=document.getElementById(sid);if(!el)return;el.addEventListener('input',e=>{S[key]=parseInt(e.target.value);const ve=document.getElementById(vid);if(ve)ve.firstChild.textContent=e.target.value;updateEmblemHints();render();});});
+// sl-text만 별도 처리 (kr-text, en-text는 syncTextInputs에서 canvas와 함께 등록)
+document.getElementById('sl-text').addEventListener('input',e=>{S.slText=e.target.value;render();});
+['c1','c2','cb','csl'].forEach(id=>{document.getElementById(id).addEventListener('input',e=>{S[id]=e.target.value;render();});});
+function updateEmblemHints(){const baseR=Math.min(S.W,S.H)*(S.emblemR/100);const rw=Math.round(baseR*(S.emblemRx/100)),rh=Math.round(baseR*(S.emblemRy/100));const gcd=(a,b)=>b===0?a:gcd(b,a%b);const g=gcd(rw,rh);const sh=document.getElementById('emb-size-hint'),rh2=document.getElementById('emb-ratio-hint'),ph=document.getElementById('emb-px-hint');if(sh)sh.textContent=`캔버스 ${S.emblemR}%`;if(rh2)rh2.textContent=`${rw/g}:${rh/g}`;if(ph)ph.textContent=`${rw*2}×${rh*2}px`;}
+function resetEmblemSize(){S.emblemR=46;S.emblemRx=100;S.emblemRy=100;[['s-emb-r','v-emb-r','46'],['s-emb-rx','v-emb-rx','100'],['s-emb-ry','v-emb-ry','100']].forEach(([sid,vid,val])=>{const el=document.getElementById(sid);if(el)el.value=val;const ve=document.getElementById(vid);if(ve)ve.firstChild.textContent=val;});updateEmblemHints();render();}
 
 // ── SVG 빌드 ─────────────────────────────────────────────────
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function getIconSVGStr(x,y,size){
-  if(!S.icon)return '';
-  if(S.icon.type==='builtin'){
-    const all=[...ICONS_BASIC,...ICONS_DELIVERY,...ICONS_MOTION];
-    const ic=all.find(i=>i.id===S.icon.id); if(!ic||!ic.svg)return '';
-    return `<g transform="translate(${x-size/2},${y-size/2}) scale(${size/32})">${ic.svg.replace(/FILL/g,S.c1)}</g>`;
-  }
-  if(S.icon.type==='img')return `<image href="${S.icon.data}" x="${x-size/2}" y="${y-size/2}" width="${size}" height="${size}"/>`;
-  return '';
-}
-function getFontCSS(){
-  const used=new Set([S.krFont,S.enFont]);
-  return [...KR_FONTS,...EN_FONTS].filter(f=>used.has(f.name)&&f.w).map(f=>f.w).join('\n');
-}
+function getIconSVGStr(x,y,size){if(!S.icon)return '';if(S.icon.type==='builtin'){const all=[...ICONS_BASIC,...ICONS_DELIVERY,...ICONS_MOTION];const ic=all.find(i=>i.id===S.icon.id);if(!ic||!ic.svg)return '';return `<g transform="translate(${x-size/2},${y-size/2}) scale(${size/32})">${ic.svg.replace(/FILL/g,S.c1)}</g>`;}if(S.icon.type==='img')return `<image href="${S.icon.data}" x="${x-size/2}" y="${y-size/2}" width="${size}" height="${size}"/>`;return '';}
+function getFontCSS(){const used=new Set([S.krFont,S.enFont]);return [...KR_FONTS,...EN_FONTS].filter(f=>used.has(f.name)&&f.w).map(f=>f.w).join('\n');}
 
 function buildContent(){
   const{krText,enText,slText,krFont,enFont,krSize,enSize,icSize,icgap,ls,ls2,gap,W,H,c1,c2,cb,csl,layout,valign,halign}=S;
@@ -940,349 +986,95 @@ function buildContent(){
   return out;
 }
 
-function render(){
-  const{W,H,previewBg}=S; const bg=previewBg==='transparent'?'transparent':previewBg;
-  const svg=document.getElementById('logo-svg');
-  svg.setAttribute('width',W); svg.setAttribute('height',H);
-  svg.innerHTML=`<defs><style>${getFontCSS()}</style></defs><rect width="${W}" height="${H}" fill="${bg}"/>${buildContent()}`;
-}
-function getCleanSVG(){
-  const{W,H,previewBg}=S; const bg=previewBg==='transparent'?'transparent':previewBg;
-  return `<?xml version="1.0" encoding="UTF-8"?><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style><![CDATA[${getFontCSS()}]]></style></defs><rect width="${W}" height="${H}" fill="${bg}"/>${buildContent()}</svg>`;
-}
+function render(){const{W,H,previewBg}=S;const bg=previewBg==='transparent'?'transparent':previewBg;const svg=document.getElementById('logo-svg');svg.setAttribute('width',W);svg.setAttribute('height',H);svg.innerHTML=`<defs><style>${getFontCSS()}</style></defs><rect width="${W}" height="${H}" fill="${bg}"/>${buildContent()}`;}
+function getCleanSVG(){const{W,H,previewBg}=S;const bg=previewBg==='transparent'?'transparent':previewBg;return `<?xml version="1.0" encoding="UTF-8"?><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style><![CDATA[${getFontCSS()}]]></style></defs><rect width="${W}" height="${H}" fill="${bg}"/>${buildContent()}</svg>`;}
 
-
-
-
-
-function arrayBufToBase64(buf){
-  const bytes=new Uint8Array(buf);
-  let bin='';
-  const CHUNK=8192;
-  for(let i=0;i<bytes.length;i+=CHUNK)
-    bin+=String.fromCharCode(...bytes.subarray(i,i+CHUNK));
-  return btoa(bin);
-}
-
-// 폰트 base64 embed SVG 생성
-async function buildEmbeddedSVG(transparentBg=false){
-  const{W,H}=S;
-  const bg=transparentBg?'transparent':(S.previewBg==='transparent'?'transparent':S.previewBg);
-  const usedFonts=[...new Set([S.krFont,S.enFont])];
-
-  const cssParts=await Promise.all(usedFonts.map(async name=>{
-    const all=[...KR_FONTS,...EN_FONTS];
-    const f=all.find(x=>x.name===name);
-    const hasW=f&&f.w;
-
-    // 폰트 바이너리 fetch 시도
-    let buf=null;
-    if(hasW){
-      const m=f.w.match(/url\("([^"]+)"\)/);
-      if(m)buf=await fetchFontBufFromURL(m[1]);
-    }else{
-      const url=await getGoogleFontURL(name);
-      if(url)buf=await fetchFontBufFromURL(url);
-    }
-
-    if(buf){
-      // fetch 성공: base64 embed
-      const b64=arrayBufToBase64(buf);
-      const ext=hasW?(f.w.match(/url\("([^"]+)"\)/)[1].endsWith('.woff2')?'woff2':'woff'):'woff2';
-      const dataUri=`data:font/${ext};base64,${b64}`;
-      if(hasW){
-        return f.w.replace(/url\("[^"]+"\)format\("[^"]+"\)/,`url('${dataUri}')format('${ext}')`);
-      }else{
-        return `@font-face{font-family:'${name}';src:url('${dataUri}')format('${ext}');font-weight:400 900;font-display:swap}`;
-      }
-    }else{
-      // fetch 실패: CDN URL 그대로 사용 (브라우저가 이미 로드한 폰트 활용)
-      return hasW ? f.w : '';
-    }
-  }));
-
-  const css=cssParts.filter(Boolean).join('\n');
-  const bgRect=bg==='transparent'?'':`<rect width="${W}" height="${H}" fill="${bg}"/>`;
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs><style><![CDATA[${css}]]></style></defs>
-  ${bgRect}
-  ${buildContent()}
-</svg>`;
-}
-
-// ════════════════════════════════════════════════════════════
-//  Canvas 렌더링 — 핵심 함수
-//
-//  왜 SVG→img→Canvas 방식을 쓰지 않는가:
-//  브라우저 보안 정책상 Blob URL의 SVG 안에서 외부 @font-face(CDN URL)는
-//  절대 로드되지 않음. base64 embed도 woff/woff2 서브셋 문제로 한글 누락 가능.
-//
-//  해결: buildContent()가 생성하는 SVG 요소들을 Canvas 2D API로 직접 재현.
-//  document.fonts에 이미 로드된 폰트를 ctx.font으로 바로 사용 → 100% 일치.
-// ════════════════════════════════════════════════════════════
-
-// 현재 logo-svg의 <text> 요소들을 Canvas 2D API로 직접 그리기
-async function renderToCanvas(scale, transparent) {
-  const { W, H } = S;
-
-  // 1) 사용 폰트 완전 로드 보장
-  const usedFonts = [...new Set([S.krFont, S.enFont])];
-  await Promise.allSettled(usedFonts.map(name =>
-    document.fonts.load(`900 ${S.krSize}px "${name}"`, '가나다ABCdef')
-      .catch(() => document.fonts.load(`700 ${S.krSize}px "${name}"`, '가나다ABCdef'))
-      .catch(() => {})
-  ));
-
-  // 2) Canvas 생성
-  const c = document.createElement('canvas');
-  c.width  = W * scale;
-  c.height = H * scale;
-  const ctx = c.getContext('2d');
-  ctx.scale(scale, scale);
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-
-  // 3) 배경
-  if (!transparent) {
-    ctx.fillStyle = S.previewBg === 'transparent' ? '#ffffff' : S.previewBg;
-    ctx.fillRect(0, 0, W, H);
-  }
-
-  // 4) 현재 렌더된 logo-svg DOM에서 요소를 읽어 Canvas에 직접 그리기
-  const svgEl = document.getElementById('logo-svg');
-  await _drawSVGNodeToCanvas(ctx, svgEl, W, H);
-
-  return c;
-}
-
-// SVG DOM 노드를 재귀적으로 Canvas에 그리기
+// ── Canvas 2D 렌더러 ─────────────────────────────────────────
 async function _drawSVGNodeToCanvas(ctx, node, W, H) {
   if (!node || !node.children) return;
-
   for (const el of node.children) {
     const tag = el.tagName.toLowerCase();
-    const get = attr => el.getAttribute(attr);
-    const getN = (attr, def=0) => parseFloat(get(attr) ?? def) || def;
-    const fill = get('fill') || 'none';
-    const stroke = get('stroke') || 'none';
-    const strokeW = getN('stroke-width', 1);
-    const opacity = getN('opacity', 1);
-
-    ctx.save();
-    ctx.globalAlpha = opacity;
-
-    // transform (translate/scale)
-    const transform = get('transform');
-    if (transform) {
-      const ts = transform.match(/translate\(([\d.-]+),([\d.-]+)\)/);
-      const sc = transform.match(/scale\(([\d.-]+)\)/);
-      if (ts) ctx.translate(parseFloat(ts[1]), parseFloat(ts[2]));
-      if (sc) ctx.scale(parseFloat(sc[1]), parseFloat(sc[1]));
+    const get = a => el.getAttribute(a);
+    const getN = (a,d=0) => parseFloat(get(a)??d)||d;
+    const fill = get('fill')||'none', stroke = get('stroke')||'none';
+    const sw = getN('stroke-width',1), op = getN('opacity',1);
+    ctx.save(); ctx.globalAlpha = op;
+    const tf = get('transform');
+    if (tf) {
+      const ts=tf.match(/translate\(([\d.-]+),([\d.-]+)\)/);
+      const sc=tf.match(/scale\(([\d.-]+)\)/);
+      if(ts)ctx.translate(parseFloat(ts[1]),parseFloat(ts[2]));
+      if(sc)ctx.scale(parseFloat(sc[1]),parseFloat(sc[1]));
     }
-
-    if (tag === 'rect') {
-      const x=getN('x'), y=getN('y'), rw=getN('width'), rh=getN('height');
-      const rx=getN('rx', 0);
-      if (fill !== 'none' && fill !== 'transparent') {
-        ctx.fillStyle = fill;
-        if (rx > 0) { _roundRect(ctx, x, y, rw, rh, rx); ctx.fill(); }
-        else ctx.fillRect(x, y, rw, rh);
-      }
-      if (stroke !== 'none') {
-        ctx.strokeStyle = stroke; ctx.lineWidth = strokeW;
-        if (rx > 0) { _roundRect(ctx, x, y, rw, rh, rx); ctx.stroke(); }
-        else ctx.strokeRect(x, y, rw, rh);
-      }
-
-    } else if (tag === 'circle') {
-      const cx=getN('cx'), cy=getN('cy'), r=getN('r');
-      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
-      if (fill !== 'none') { ctx.fillStyle = fill; ctx.fill(); }
-      if (stroke !== 'none') { ctx.strokeStyle = stroke; ctx.lineWidth = strokeW; ctx.stroke(); }
-
-    } else if (tag === 'ellipse') {
-      const cx=getN('cx'), cy=getN('cy'), rx=getN('rx'), ry=getN('ry');
-      ctx.beginPath(); ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
-      if (fill !== 'none') { ctx.fillStyle = fill; ctx.fill(); }
-      if (stroke !== 'none') { ctx.strokeStyle = stroke; ctx.lineWidth = strokeW; ctx.stroke(); }
-
-    } else if (tag === 'polygon' || tag === 'polyline') {
-      const pts = (get('points')||'').trim().split(/[\s,]+/).reduce((a,v,i,arr) => {
-        if (i%2===0) a.push([parseFloat(v), parseFloat(arr[i+1])]);
-        return a;
-      }, []);
-      if (pts.length) {
-        ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
-        for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i][0], pts[i][1]);
-        if (tag==='polygon') ctx.closePath();
-        if (fill !== 'none') { ctx.fillStyle = fill; ctx.fill(); }
-        if (stroke !== 'none') { ctx.strokeStyle = stroke; ctx.lineWidth = strokeW; ctx.stroke(); }
-      }
-
-    } else if (tag === 'path') {
-      const d = get('d');
-      if (d) {
-        const path2d = new Path2D(d);
-        if (fill !== 'none' && fill !== 'transparent') { ctx.fillStyle = fill; ctx.fill(path2d); }
-        if (stroke !== 'none') { ctx.strokeStyle = stroke; ctx.lineWidth = strokeW; ctx.stroke(path2d); }
-      }
-
-    } else if (tag === 'line') {
-      ctx.beginPath();
-      ctx.moveTo(getN('x1'), getN('y1'));
-      ctx.lineTo(getN('x2'), getN('y2'));
-      if (stroke !== 'none') { ctx.strokeStyle = stroke; ctx.lineWidth = strokeW; ctx.stroke(); }
-
-    } else if (tag === 'text') {
-      // 핵심: document.fonts에 로드된 폰트를 ctx.font으로 직접 사용
-      const x = getN('x');
-      const y = getN('y');
-      const fontSize = getN('font-size', 16);
-      const letterSpacing = getN('letter-spacing', 0);
-      const textAnchor = get('text-anchor') || 'start';
-      const textFill = fill !== 'none' ? fill : '#000';
-      const rawFamily = (get('font-family') || '').replace(/'/g, '').split(',')[0].trim();
-      const txt = el.textContent || '';
-
-      ctx.fillStyle = textFill;
-      ctx.font = `900 ${fontSize}px "${rawFamily}", sans-serif`;
-      ctx.textBaseline = 'alphabetic';
-
-      // letter-spacing 적용 + text-anchor 처리
-      if (letterSpacing !== 0 || textAnchor !== 'start') {
-        const chars = [...txt];
-        // 전체 폭 계산
-        let totalW = 0;
-        chars.forEach(ch => { totalW += ctx.measureText(ch).width + letterSpacing; });
-        let startX = x;
-        if (textAnchor === 'middle') startX = x - totalW / 2;
-        else if (textAnchor === 'end') startX = x - totalW;
-
-        let curX = startX;
-        chars.forEach(ch => {
-          ctx.fillText(ch, curX, y);
-          curX += ctx.measureText(ch).width + letterSpacing;
-        });
-      } else {
-        ctx.fillText(txt, x, y);
-      }
-
-    } else if (tag === 'image') {
-      // 업로드된 아이콘 이미지
-      const href = get('href') || get('xlink:href');
-      if (href) {
-        await new Promise(res => {
-          const img = new Image();
-          img.onload = () => {
-            ctx.drawImage(img, getN('x'), getN('y'), getN('width'), getN('height'));
-            res();
-          };
-          img.onerror = res;
-          img.src = href;
-        });
-      }
-
-    } else if (tag === 'g') {
-      // 그룹: 자식 재귀 처리 (fill 상속)
-      const gFill = get('fill');
-      if (gFill) {
-        // 자식에 fill 상속을 위해 자식 요소의 fill이 없으면 주입
-        for (const child of el.children) {
-          if (!child.getAttribute('fill')) child.setAttribute('fill', gFill);
-        }
-      }
-      await _drawSVGNodeToCanvas(ctx, el, W, H);
+    if (tag==='rect') {
+      const x=getN('x'),y=getN('y'),rw=getN('width'),rh=getN('height'),rx=getN('rx',0);
+      if(fill!=='none'&&fill!=='transparent'){ctx.fillStyle=fill;if(rx>0){_rr(ctx,x,y,rw,rh,rx);ctx.fill();}else ctx.fillRect(x,y,rw,rh);}
+      if(stroke!=='none'){ctx.strokeStyle=stroke;ctx.lineWidth=sw;if(rx>0){_rr(ctx,x,y,rw,rh,rx);ctx.stroke();}else ctx.strokeRect(x,y,rw,rh);}
+    } else if(tag==='circle'){
+      const cx=getN('cx'),cy=getN('cy'),r=getN('r');
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+      if(fill!=='none'){ctx.fillStyle=fill;ctx.fill();}
+      if(stroke!=='none'){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.stroke();}
+    } else if(tag==='ellipse'){
+      const cx=getN('cx'),cy=getN('cy'),rx=getN('rx'),ry=getN('ry');
+      ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);
+      if(fill!=='none'){ctx.fillStyle=fill;ctx.fill();}
+      if(stroke!=='none'){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.stroke();}
+    } else if(tag==='polygon'||tag==='polyline'){
+      const pts=(get('points')||'').trim().split(/[\s,]+/).reduce((a,v,i,arr)=>{if(i%2===0)a.push([parseFloat(v),parseFloat(arr[i+1])]);return a;},[]);      if(pts.length){ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);if(tag==='polygon')ctx.closePath();if(fill!=='none'){ctx.fillStyle=fill;ctx.fill();}if(stroke!=='none'){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.stroke();}}
+    } else if(tag==='path'){
+      const dd=get('d');if(dd){const p=new Path2D(dd);if(fill!=='none'&&fill!=='transparent'){ctx.fillStyle=fill;ctx.fill(p);}if(stroke!=='none'){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.stroke(p);}}
+    } else if(tag==='line'){
+      ctx.beginPath();ctx.moveTo(getN('x1'),getN('y1'));ctx.lineTo(getN('x2'),getN('y2'));
+      if(stroke!=='none'){ctx.strokeStyle=stroke;ctx.lineWidth=sw;ctx.stroke();}
+    } else if(tag==='text'){
+      const tx=getN('x'),ty=getN('y'),fs=getN('font-size',16),ls=getN('letter-spacing',0);
+      const anchor=get('text-anchor')||'start',tfill=fill!=='none'?fill:'#000';
+      const fam=(get('font-family')||'').replace(/'/g,'').split(',')[0].trim();
+      const txt=el.textContent||'';
+      ctx.fillStyle=tfill;ctx.font=`900 ${fs}px "${fam}", sans-serif`;ctx.textBaseline='alphabetic';
+      const chars=[...txt];let totalW=0;
+      chars.forEach(c=>{totalW+=ctx.measureText(c).width+ls;});
+      let curX=tx;
+      if(anchor==='middle')curX=tx-totalW/2;else if(anchor==='end')curX=tx-totalW;
+      chars.forEach(c=>{ctx.fillText(c,curX,ty);curX+=ctx.measureText(c).width+ls;});
+    } else if(tag==='image'){
+      const href=get('href')||get('xlink:href');
+      if(href)await new Promise(res=>{const img=new Image();img.onload=()=>{ctx.drawImage(img,getN('x'),getN('y'),getN('width'),getN('height'));res();};img.onerror=res;img.src=href;});
+    } else if(tag==='g'){
+      const gFill=get('fill');
+      if(gFill)for(const child of el.children)if(!child.getAttribute('fill'))child.setAttribute('fill',gFill);
+      await _drawSVGNodeToCanvas(ctx,el,W,H);
     }
-
     ctx.restore();
   }
 }
+function _rr(ctx,x,y,w,h,r){if(ctx.roundRect){ctx.beginPath();ctx.roundRect(x,y,w,h,r);return;}const rd=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+rd,y);ctx.lineTo(x+w-rd,y);ctx.arcTo(x+w,y,x+w,y+rd,rd);ctx.lineTo(x+w,y+h-rd);ctx.arcTo(x+w,y+h,x+w-rd,y+h,rd);ctx.lineTo(x+rd,y+h);ctx.arcTo(x,y+h,x,y+h-rd,rd);ctx.lineTo(x,y+rd);ctx.arcTo(x,y,x+rd,y,rd);ctx.closePath();}
 
-// Canvas roundRect 헬퍼 (구형 브라우저 대응)
-function _roundRect(ctx, x, y, w, h, r) {
-  if (ctx.roundRect) {
-    ctx.beginPath(); ctx.roundRect(x, y, w, h, r); return;
-  }
-  const rad = Math.min(r, w/2, h/2);
-  ctx.beginPath();
-  ctx.moveTo(x+rad, y);
-  ctx.lineTo(x+w-rad, y); ctx.arcTo(x+w, y, x+w, y+rad, rad);
-  ctx.lineTo(x+w, y+h-rad); ctx.arcTo(x+w, y+h, x+w-rad, y+h, rad);
-  ctx.lineTo(x+rad, y+h); ctx.arcTo(x, y+h, x, y+h-rad, rad);
-  ctx.lineTo(x, y+rad); ctx.arcTo(x, y, x+rad, y, rad);
-  ctx.closePath();
-}
 
-// ── SVG 벡터 저장 ──────────────────────────────────────────────
-// opentype.js — woff2 지원 최신 버전 우선 로드
-let _ot = null;
-async function loadOT() {
-  if (_ot) return _ot;
-  const srcs = [
-    'https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js',
-    'https://unpkg.com/opentype.js@latest/dist/opentype.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js',
-  ];
-  for (const src of srcs) {
-    try {
-      await new Promise((res, rej) => {
-        const s = document.createElement('script');
-        s.src = src; s.onload = res; s.onerror = rej;
-        document.head.appendChild(s);
-      });
-      if (window.opentype) { _ot = window.opentype; return _ot; }
-    } catch(e) {}
-  }
-  throw new Error('opentype.js 로드 실패');
-}
-
-// 폰트 바이너리 캐시
+// ═══════════════════════════════════════════════════════════════
+//  폰트 fetch 시스템
+//  우선순위: woff(opentype 직접) > gstatic woff2 > jsdelivr woff2
+//  모든 폰트에 올바른 URL이 매핑되어 있음
+// ═══════════════════════════════════════════════════════════════
 const _fontBufCache = {};
 const _gfUrlCache   = {};
 
-// URL에서 바이너리 가져오기 — fetch + XHR 두 방법
 async function fetchFontBufFromURL(url) {
-  // fetch (https 환경)
   for (const opts of [{mode:'cors',cache:'force-cache'},{mode:'cors'},{cache:'default'}]) {
     try {
       const r = await fetch(url, opts);
-      if (r.ok) { const b = await r.arrayBuffer(); if (b.byteLength > 0) return b; }
+      if (r.ok) { const b = await r.arrayBuffer(); if (b.byteLength > 1000) return b; }
     } catch(e) {}
   }
-  // XMLHttpRequest (file:// 환경 일부 지원)
   try {
-    const b = await new Promise((res, rej) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true); xhr.responseType = 'arraybuffer';
-      xhr.onload = () => (xhr.status===200||xhr.status===0) ? res(xhr.response) : rej();
-      xhr.onerror = rej; xhr.send();
+    const b = await new Promise((res,rej) => {
+      const x = new XMLHttpRequest();
+      x.open('GET', url, true); x.responseType = 'arraybuffer';
+      x.onload = () => (x.status===200||x.status===0) ? res(x.response) : rej();
+      x.onerror = rej; x.send();
     });
-    if (b && b.byteLength > 0) return b;
-  } catch(e) {}
-  return null;
-}
-
-async function getGoogleFontURL(name) {
-  if (_gfUrlCache[name]) return _gfUrlCache[name];
-  try {
-    const fam = name.replace(/ /g, '+');
-    for (const w of ['900','700','400']) {
-      try {
-        const r = await fetch(`https://fonts.googleapis.com/css2?family=${fam}:wght@${w}&subset=korean&display=swap`);
-        if (!r.ok) continue;
-        const css = await r.text();
-        const us = [...css.matchAll(/url\(([^)]+\.woff2)\)/g)].map(m=>m[1]);
-        if (!us.length) continue;
-        for (const sec of css.split('@font-face')) {
-          if ((sec.includes('AC00')||sec.includes('ac00'))&&sec.includes('woff2')) {
-            const m=sec.match(/url\(([^)]+\.woff2)\)/);
-            if(m){_gfUrlCache[name]=m[1];return m[1];}
-          }
-        }
-        _gfUrlCache[name]=us[0]; return us[0];
-      } catch(e) {}
-    }
+    if (b && b.byteLength > 1000) return b;
   } catch(e) {}
   return null;
 }
@@ -1291,303 +1083,376 @@ async function fetchFontBuf(name) {
   if (_fontBufCache[name]) return _fontBufCache[name];
   const all = [...KR_FONTS, ...EN_FONTS];
   const f = all.find(x => x.name === name);
-  try { await document.fonts.load(`900 40px "${name}"`, '가나다ABCabc'); } catch(e) {}
+  if (!f) return null;
 
   let buf = null;
-  // 1) woff 우선 (opentype.js 호환성 최고)
-  if (f && f.woff) {
+  // 1순위: woff (opentype.js가 직접 파싱, 가장 안정적)
+  if (f.woff) {
     buf = await fetchFontBufFromURL(f.woff);
-    if (buf) console.log(`[font] woff ✅ ${name}`);
+    if (buf) console.log(`[font] woff OK: ${name}`);
   }
-  // 2) w 필드 URL
-  if (!buf && f && f.w) {
+  // 2순위: gstatic 직접 URL (CORS 허용, woff2)
+  if (!buf && f.gstatic) {
+    buf = await fetchFontBufFromURL(f.gstatic);
+    if (buf) console.log(`[font] gstatic OK: ${name}`);
+  }
+  // 3순위: @font-face w 필드 URL (jsdelivr woff2)
+  if (!buf && f.w) {
     const m = f.w.match(/url\("([^"]+)"\)/);
     if (m) {
       buf = await fetchFontBufFromURL(m[1]);
-      if (buf) console.log(`[font] w-url ✅ ${name}`);
+      if (buf) console.log(`[font] cdn OK: ${name}`);
     }
   }
-  // 3) Google Fonts CSS API
-  if (!buf && (!f || !f.w)) {
-    const url = await getGoogleFontURL(name);
-    if (url) { buf = await fetchFontBufFromURL(url); if (buf) console.log(`[font] gfonts ✅ ${name}`); }
-  }
-  if (!buf) console.warn(`[font] ❌ ${name} — file://에서는 웹서버로 열어야 합니다`);
+  if (!buf) console.warn(`[font] FAIL: ${name}`);
   if (buf) _fontBufCache[name] = buf;
   return buf;
 }
 
-// opentype.js로 <text> → <path> 변환 (폰트 fetch 성공 시)
-// Canvas measureText 보정으로 text-anchor, letter-spacing 정확 처리
-async function textToSVGPaths(node, otFont) {
-  const txt = node.textContent || '';
-  if (!txt.trim()) return null;
-
-  const x          = parseFloat(node.getAttribute('x') || 0);
-  const y          = parseFloat(node.getAttribute('y') || 0);
-  const fontSize   = parseFloat(node.getAttribute('font-size') || 16);
-  const letterSp   = parseFloat(node.getAttribute('letter-spacing') || 0);
-  const anchor     = node.getAttribute('text-anchor') || 'start';
-  const fill       = node.getAttribute('fill') || '#000';
-  const opacity    = node.getAttribute('opacity');
-
-  const scale = fontSize / otFont.unitsPerEm;
-
-  // 글자별 advance width 계산 (opentype 기준)
-  const chars = [...txt];
-  const advances = chars.map(ch => otFont.charToGlyph(ch).advanceWidth * scale + letterSp);
-  const totalW = advances.reduce((a,b)=>a+b, 0);
-
-  let startX = x;
-  if (anchor === 'middle') startX = x - totalW / 2;
-  else if (anchor === 'end') startX = x - totalW;
-
-  let pathsD = '';
-  let curX = startX;
-  for (let i = 0; i < chars.length; i++) {
-    const glyph = otFont.charToGlyph(chars[i]);
-    const p = glyph.getPath(curX, y, fontSize);
-    // opentype Path 객체의 commands를 직접 SVG path d 문자열로 변환
-    const cmds = p.commands;
-    for (const cmd of cmds) {
-      switch(cmd.type) {
-        case 'M': pathsD += `M${cmd.x.toFixed(2)} ${cmd.y.toFixed(2)} `; break;
-        case 'L': pathsD += `L${cmd.x.toFixed(2)} ${cmd.y.toFixed(2)} `; break;
-        case 'C': pathsD += `C${cmd.x1.toFixed(2)} ${cmd.y1.toFixed(2)} ${cmd.x2.toFixed(2)} ${cmd.y2.toFixed(2)} ${cmd.x.toFixed(2)} ${cmd.y.toFixed(2)} `; break;
-        case 'Q': pathsD += `Q${cmd.x1.toFixed(2)} ${cmd.y1.toFixed(2)} ${cmd.x.toFixed(2)} ${cmd.y.toFixed(2)} `; break;
-        case 'Z': pathsD += 'Z '; break;
-      }
-    }
-    curX += advances[i];
-  }
-
-  // 하나의 <path>로 합쳐서 반환
-  const opacityAttr = opacity ? ` opacity="${opacity}"` : '';
-  return `<path d="${pathsD.trim()}" fill="${fill}"${opacityAttr}/>`;
+function arrayBufToBase64(buf) {
+  const b = new Uint8Array(buf); let s = '';
+  for (let i = 0; i < b.length; i += 8192)
+    s += String.fromCharCode(...b.subarray(i, i+8192));
+  return btoa(s);
 }
 
-// SVG DOM 노드 → 벡터 SVG 문자열 직렬화 (재귀)
-// <text>는 opentype path로 변환, 나머지 도형은 그대로 직렬화
-async function svgNodeToString(node, fontMap) {
-  if (!node || !node.children) return '';
+// ═══════════════════════════════════════════════════════════════
+//  opentype.js + wawoff2 (woff2 디코더) 로드
+// ═══════════════════════════════════════════════════════════════
+let _ot = null;
+async function loadOT() {
+  if (_ot) return _ot;
+  // wawoff2 디코더 먼저 로드 (woff2 파싱에 필요)
+  for (const src of [
+    'https://unpkg.com/wawoff2@2.0.1/build/decompress_binding.js',
+    'https://cdn.jsdelivr.net/npm/wawoff2@2.0.1/build/decompress_binding.js',
+  ]) {
+    try {
+      await new Promise((res,rej) => {
+        const s = document.createElement('script');
+        s.src = src; s.onload = res; s.onerror = rej;
+        document.head.appendChild(s);
+      });
+      await new Promise(res => setTimeout(res, 200));
+      if (window.Module) { console.log('[OT] wawoff2 OK'); break; }
+    } catch(e) {}
+  }
+  // opentype.js 로드
+  for (const src of [
+    'https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js',
+    'https://unpkg.com/opentype.js@latest/dist/opentype.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js',
+  ]) {
+    try {
+      await new Promise((res,rej) => {
+        const s = document.createElement('script');
+        s.src = src; s.onload = res; s.onerror = rej;
+        document.head.appendChild(s);
+      });
+      if (window.opentype) {
+        _ot = window.opentype;
+        // woff2 디코더 등록
+        if (window.Module && window.Module.decompress) {
+          window.decompress = window.Module.decompress;
+          console.log('[OT] woff2 디코더 등록 완료');
+        }
+        console.log('[OT] opentype.js OK');
+        return _ot;
+      }
+    } catch(e) {}
+  }
+  throw new Error('opentype.js 로드 실패');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  텍스트 → SVG path 변환
+// ═══════════════════════════════════════════════════════════════
+async function textToPath(node, otFont) {
+  const txt = node.textContent || '';
+  if (!txt.trim()) return null;
+  const x       = parseFloat(node.getAttribute('x') || 0);
+  const y       = parseFloat(node.getAttribute('y') || 0);
+  const fs      = parseFloat(node.getAttribute('font-size') || 16);
+  const ls      = parseFloat(node.getAttribute('letter-spacing') || 0);
+  const anchor  = node.getAttribute('text-anchor') || 'start';
+  const fill    = node.getAttribute('fill') || '#000';
+  const opacity = node.getAttribute('opacity') || '';
+  const scale   = fs / otFont.unitsPerEm;
+  const chars   = [...txt];
+  const adv     = chars.map(c => otFont.charToGlyph(c).advanceWidth * scale + ls);
+  const totalW  = adv.reduce((a,b)=>a+b,0);
+  let startX = x;
+  if (anchor==='middle') startX = x - totalW/2;
+  else if (anchor==='end') startX = x - totalW;
+  let d = '', curX = startX;
+  for (let i=0; i<chars.length; i++) {
+    const p = otFont.charToGlyph(chars[i]).getPath(curX, y, fs);
+    for (const c of p.commands) {
+      switch(c.type) {
+        case 'M': d+=`M${c.x.toFixed(2)} ${c.y.toFixed(2)} `; break;
+        case 'L': d+=`L${c.x.toFixed(2)} ${c.y.toFixed(2)} `; break;
+        case 'C': d+=`C${c.x1.toFixed(2)} ${c.y1.toFixed(2)} ${c.x2.toFixed(2)} ${c.y2.toFixed(2)} ${c.x.toFixed(2)} ${c.y.toFixed(2)} `; break;
+        case 'Q': d+=`Q${c.x1.toFixed(2)} ${c.y1.toFixed(2)} ${c.x.toFixed(2)} ${c.y.toFixed(2)} `; break;
+        case 'Z': d+='Z '; break;
+      }
+    }
+    curX += adv[i];
+  }
+  const opAttr = opacity ? ` opacity="${opacity}"` : '';
+  return `<path d="${d.trim()}" fill="${fill}"${opAttr}/>`;
+}
+
+// SVG DOM → 벡터 문자열 (text는 path로, 도형은 그대로)
+async function domToVectorSVG(svgEl, fontMap) {
   let out = '';
-
-  for (const el of node.children) {
+  for (const el of svgEl.children) {
     const tag = el.tagName.toLowerCase();
-    if (tag === 'defs') continue; // @font-face CSS 제거
-
+    if (tag === 'defs') continue;
     if (tag === 'text') {
-      const family = (el.getAttribute('font-family') || '').replace(/'/g,'').split(',')[0].trim();
+      const family = (el.getAttribute('font-family')||'').replace(/'/g,'').split(',')[0].trim();
       const otFont = fontMap[family];
-
       if (otFont) {
-        // opentype로 path 변환
-        const pathEl = await textToSVGPaths(el, otFont);
+        const pathEl = await textToPath(el, otFont);
         if (pathEl) { out += pathEl + '\n'; continue; }
       }
-      // opentype 변환 실패 → <text> 그대로 (편집 가능하지만 폰트 의존)
+      // 변환 실패 시 <text> 유지
       out += el.outerHTML + '\n';
-
     } else if (tag === 'g') {
       const attrs = [...el.attributes].map(a=>`${a.name}="${a.value}"`).join(' ');
-      const inner = await svgNodeToString(el, fontMap);
+      const inner = await domToVectorSVG(el, fontMap);
       out += `<g ${attrs}>${inner}</g>\n`;
-
     } else {
-      // rect, circle, polygon, path, line, ellipse, image 등 → 그대로 직렬화
       out += el.outerHTML + '\n';
     }
   }
   return out;
 }
 
-// SVG 저장 — 벡터 SVG (텍스트 path outline 우선, 실패 시 <text> 유지 벡터)
-async function dlSVGRaw() {
-  // ── file:// 환경 감지 ──────────────────────────────────────
-  if (location.protocol === 'file:') {
-    const msg = `⚠️ SVG outline을 만들려면 웹서버가 필요해요\n\n` +
-      `지금 파일을 직접 열고 있어서 (file://) CDN 폰트를 가져올 수 없어요.\n\n` +
-      `해결 방법:\n` +
-      `① VS Code → 파일 우클릭 → Open with Live Server\n` +
-      `② 터미널: python3 -m http.server 8080\n   → http://localhost:8080 에서 열기\n` +
-      `③ GitHub Pages 등 웹서버 배포 후 사용\n\n` +
-      `지금은 <text> 유지 벡터 SVG로 저장할게요 (도형 편집은 가능).`;
-    alert(msg);
-    // <text> 유지 벡터 SVG로 저장 (편집은 가능)
-    showToast('벡터 SVG 저장 중 (<text> 유지)...');
-    try {
-      const svgStr = await buildEmbeddedSVG(false);
-      _saveSVG(svgStr, (S.krText||S.enText||'logo').replace(/\s+/g,'_') + '_vector.svg');
-      showToast('✓ SVG 저장 완료 (텍스트 편집 가능 벡터)');
-    } catch(e) {
-      const { W, H } = S;
-      const bg = S.previewBg === 'transparent' ? 'transparent' : S.previewBg;
-      const svgStr = `<?xml version="1.0" encoding="UTF-8"?><svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><style><![CDATA[${getFontCSS()}]]></style></defs>${bg!=='transparent'?`<rect width="${W}" height="${H}" fill="${bg}"/>`:''}${buildContent()}</svg>`;
-      _saveSVG(svgStr, (S.krText||S.enText||'logo').replace(/\s+/g,'_') + '_vector.svg');
-      showToast('✓ SVG 저장 완료');
+// ═══════════════════════════════════════════════════════════════
+//  Canvas 렌더링 (PNG/PDF용) — document.fonts 활용
+// ═══════════════════════════════════════════════════════════════
+async function renderToCanvas(scale, transparent) {
+  const {W, H} = S;
+  const usedFonts = [...new Set([S.krFont, S.enFont])];
+  await Promise.allSettled(usedFonts.map(name =>
+    document.fonts.load(`900 ${S.krSize}px "${name}"`, '가나다ABCdef').catch(()=>{})
+  ));
+  const c = document.createElement('canvas');
+  c.width = W*scale; c.height = H*scale;
+  const ctx = c.getContext('2d');
+  ctx.scale(scale, scale);
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  if (!transparent) {
+    ctx.fillStyle = S.previewBg==='transparent' ? '#ffffff' : S.previewBg;
+    ctx.fillRect(0, 0, W, H);
+  }
+  await _drawSVGNodeToCanvas(ctx, document.getElementById('logo-svg'), W, H);
+  return c;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  다운로드 함수들
+// ═══════════════════════════════════════════════════════════════
+
+// ── 공통: 파일 저장
+function _saveFile(content, filename, mime) {
+  const blob = new Blob([content], {type: mime});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+}
+
+// ── PDF (벡터: Canvas 고해상도 렌더 → pdf-lib embed)
+async function dlPDF() {
+  showToast('PDF 생성 중...');
+  try {
+    if (!window.PDFLib) {
+      await new Promise((res,rej) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js';
+        s.onload = res; s.onerror = rej; document.head.appendChild(s);
+      });
     }
+    const {W, H} = S;
+    const scale = Math.max(Math.ceil(1000/W), 3);
+    const canvas = await renderToCanvas(scale, true);
+    const pngData = canvas.toDataURL('image/png').split(',')[1];
+    const pngBytes = Uint8Array.from(atob(pngData), c => c.charCodeAt(0));
+    const {PDFDocument} = window.PDFLib;
+    const pdfDoc = await PDFDocument.create();
+    const page = pdfDoc.addPage([W, H]);
+    const img = await pdfDoc.embedPng(pngBytes);
+    page.drawImage(img, {x:0, y:0, width:W, height:H});
+    const pdfBytes = await pdfDoc.save();
+    _saveFile(pdfBytes, `${(S.krText||S.enText||'logo').replace(/\s+/g,'_')}_logo.pdf`, 'application/pdf');
+    showToast(`✓ PDF 저장 완료 (${W*scale}×${H*scale}px)`);
+  } catch(e) {
+    console.error('PDF 실패:', e);
+    showToast('PDF 저장 실패');
+  }
+}
+
+// ── SVG (벡터: text→path outline)
+async function dlSVGRaw() {
+  if (location.protocol === 'file:') {
+    alert('SVG outline은 웹서버(http://)에서만 동작해요.\n\n방법:\n• VS Code Live Server\n• python3 -m http.server 8080\n• GitHub Pages 배포');
     return;
   }
-
   showToast('SVG outline 변환 중...');
-  const { W, H } = S;
-  const bg = S.previewBg === 'transparent' ? 'transparent' : S.previewBg;
-  const bgRect = bg === 'transparent' ? '' : `<rect width="${W}" height="${H}" fill="${bg}"/>`;
-  const filename = (S.krText||S.enText||'logo').replace(/\s+/g,'_');
-
-  // ── Step 1: opentype.js + 폰트 fetch → 텍스트 path outline ──
+  const {W, H} = S;
+  const bg = S.previewBg==='transparent' ? 'transparent' : S.previewBg;
+  const bgRect = bg==='transparent' ? '' : `<rect width="${W}" height="${H}" fill="${bg}"/>`;
+  const fname = (S.krText||S.enText||'logo').replace(/\s+/g,'_');
   try {
-    // 1-1) opentype.js 로드
     await loadOT();
-    console.log('[SVG] opentype.js 로드 성공');
-
-    // 1-2) 폰트 바이너리 fetch
     const usedFonts = [...new Set([S.krFont, S.enFont])];
     const fontMap = {};
     await Promise.allSettled(usedFonts.map(async name => {
       const buf = await fetchFontBuf(name);
       if (buf) {
-        try {
-          fontMap[name] = _ot.parse(buf);
-          console.log(`[SVG] 폰트 parse 성공: ${name} (${buf.byteLength} bytes)`);
-        } catch(e) {
-          console.warn(`[SVG] 폰트 parse 실패: ${name}`, e);
-        }
-      } else {
-        console.warn(`[SVG] 폰트 fetch 실패: ${name}`);
+        try { fontMap[name] = _ot.parse(buf); console.log(`[SVG] parse OK: ${name}`); }
+        catch(e) { console.warn(`[SVG] parse FAIL: ${name}`, e.message); }
       }
     }));
-
-    console.log('[SVG] fontMap:', Object.keys(fontMap));
-
     if (Object.keys(fontMap).length > 0) {
-      // path outline 변환 성공
-      const pathBody = await _buildPathSVGBody(fontMap, W, H);
-      const svgOut =
-`<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  ${bgRect}
-  ${pathBody}
-</svg>`;
-      _saveSVG(svgOut, filename + '_outlined.svg');
-      showToast('✓ SVG 저장 완료 — 텍스트 path outline (AI에서 편집 가능)');
+      const svgEl = document.getElementById('logo-svg');
+      const body = await domToVectorSVG(svgEl, fontMap);
+      const svgOut = `<?xml version="1.0" encoding="UTF-8"?>\n<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n  ${bgRect}\n  ${body}\n</svg>`;
+      _saveFile(svgOut, fname + '_outlined.svg', 'image/svg+xml;charset=utf-8');
+      showToast('✓ SVG outline 저장 완료 — AI에서 path로 열림');
       return;
     }
-
-    // fontMap이 비어있는 경우 → Step 2로 진행
-    console.warn('[SVG] 모든 폰트 fetch 실패 → <text> 유지 벡터로 저장');
-    showToast('폰트 로드 실패 — <text> 유지 벡터 SVG로 저장해요');
-
+    console.warn('[SVG] fontMap 비어있음 — 폰트 fetch 실패');
+    showToast('폰트 로드 실패 — 텍스트 벡터 SVG로 저장해요');
   } catch(e) {
-    console.warn('[SVG] Step1 예외:', e);
+    console.error('[SVG] 오류:', e);
+    showToast('SVG outline 실패 — 텍스트 벡터로 저장해요');
   }
-
-  // ── Step 2: <text> 유지 + @font-face embed ──────────────────
-  // AI에서 열면 텍스트가 편집 가능 상태로 열림 (폰트 outline 아님)
-  // 하지만 완전한 벡터 SVG (도형, 색상, 크기 편집 가능)
-  try {
-    const svgStr = await buildEmbeddedSVG(false);
-    _saveSVG(svgStr, filename + '_vector.svg');
-    showToast('✓ SVG 저장 (텍스트 편집 가능 벡터)');
-  } catch(e) {
-    // 최후: 순수 벡터 SVG
-    const svgStr =
-`<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs><style><![CDATA[${getFontCSS()}]]></style></defs>
-  ${bgRect}
-  ${buildContent()}
-</svg>`;
-    _saveSVG(svgStr, filename + '_vector.svg');
-    showToast('✓ SVG 저장 완료');
-  }
+  // fallback: <text> 유지 + @font-face
+  const svgStr = `<?xml version="1.0" encoding="UTF-8"?>\n<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">\n  <defs><style><![CDATA[${getFontCSS()}]]></style></defs>\n  ${bg!=='transparent'?`<rect width="${W}" height="${H}" fill="${bg}"/>`:''}  ${buildContent()}\n</svg>`;
+  _saveFile(svgStr, fname + '_vector.svg', 'image/svg+xml;charset=utf-8');
 }
 
-function _saveSVG(svgStr, filename) {
-  const blob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  a.click();
-}
-
-// opentype path 변환이 성공했을 때 SVG body 생성
-async function _buildPathSVGBody(fontMap, W, H) {
-  const svgEl = document.getElementById('logo-svg');
-  return await svgNodeToString(svgEl, fontMap);
-}
-
-// Fallback: Canvas 래스터 → SVG image embed
-async function _dlSVGFallback() {
-  const { W, H } = S;
-  const bg = S.previewBg === 'transparent' ? 'transparent' : S.previewBg;
-  const canvas = await renderToCanvas(Math.max(Math.ceil(1000/W),2), true);
-  const dataUrl = canvas.toDataURL('image/png');
-  const svgOut =
-`<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"
-  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  ${bg!=='transparent'?`<rect width="${W}" height="${H}" fill="${bg}"/>`:''}
-  <image x="0" y="0" width="${W}" height="${H}" xlink:href="${dataUrl}"/>
-</svg>`;
-  const blob = new Blob([svgOut], { type: 'image/svg+xml;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `${(S.krText||S.enText||'logo').replace(/\s+/g,'_')}_image.svg`;
-  a.click();
-}
-async function dlPDF(){
-  showToast('PDF 생성 중...');
-  try{
-    if(!window.PDFLib){
-      await new Promise((res,rej)=>{
-        const s=document.createElement('script');
-        s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js';
-        s.onload=res; s.onerror=rej; document.head.appendChild(s);
-      });
-    }
-    const{PDFDocument}=window.PDFLib;
-    const{W,H}=S; const scale=Math.max(Math.ceil(1000/W),2);
-    const canvas=await renderToCanvas(scale,true);
-    const pngDataUrl=canvas.toDataURL('image/png');
-    const pngBase64=pngDataUrl.split(',')[1];
-    const pngBytes=Uint8Array.from(atob(pngBase64),c=>c.charCodeAt(0));
-    const pdfDoc=await PDFDocument.create();
-    const page=pdfDoc.addPage([W,H]);
-    const pngImage=await pdfDoc.embedPng(pngBytes);
-    page.drawImage(pngImage,{x:0,y:0,width:W,height:H});
-    const pdfBytes=await pdfDoc.save();
-    const blob=new Blob([pdfBytes],{type:'application/pdf'});
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
-    a.download=`${(S.krText||S.enText||'logo').replace(/\s+/g,'_')}_outlined.pdf`;
-    a.click(); showToast('✓ PDF 저장 완료');
-  }catch(e){console.error('PDF 실패:',e);showToast('PDF 실패 — SVG로 저장해요');dlSVGRaw();}
-}
-
-// PNG — 투명 배경, 1000px+
-async function dlPNG(){
+// ── PNG (투명 배경, 1000px+)
+async function dlPNG() {
   showToast('PNG 생성 중...');
-  try{
-    const{W,H}=S; const scale=Math.max(Math.ceil(1000/W),2);
-    const canvas=await renderToCanvas(scale,true);
-    canvas.toBlob(b=>{
-      const a=document.createElement('a');
-      a.href=URL.createObjectURL(b);
-      a.download=`${(S.krText||S.enText||'logo').replace(/\s+/g,'_')}_logo.png`;
-      a.click(); showToast(`✓ PNG 저장 — ${canvas.width}×${canvas.height}px`);
-    },'image/png');
-  }catch(e){console.error('PNG 실패:',e);showToast('PNG 저장 실패');}
+  try {
+    const {W, H} = S;
+    const scale = Math.max(Math.ceil(1000/W), 2);
+    const canvas = await renderToCanvas(scale, true);
+    canvas.toBlob(b => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(b);
+      a.download = `${(S.krText||S.enText||'logo').replace(/\s+/g,'_')}_logo.png`;
+      a.click();
+      showToast(`✓ PNG 저장 — ${canvas.width}×${canvas.height}px`);
+    }, 'image/png');
+  } catch(e) {
+    console.error('PNG 실패:', e); showToast('PNG 저장 실패');
+  }
 }
 
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.style.opacity='1'; clearTimeout(t._tid);
-  t._tid=setTimeout(()=>{t.style.opacity='0';},2400);
+
+function showToast(msg,dur=2600){const t=document.getElementById('toast');t.textContent=msg;t.style.opacity='1';clearTimeout(t._tid);t._tid=setTimeout(()=>{t.style.opacity='0';},dur);}
+
+// ② 고급 설정 접기/펼치기
+let _advOpen = false;
+function toggleAdv() {
+  _advOpen = !_advOpen;
+  const panel = document.getElementById('adv-panel');
+  const arrow = document.getElementById('adv-arrow');
+  if (_advOpen) {
+    panel.style.display = 'flex';
+    panel.style.maxHeight = '400px';
+    arrow.style.transform = 'rotate(90deg)';
+  } else {
+    panel.style.maxHeight = '0';
+    arrow.style.transform = '';
+    setTimeout(() => { if (!_advOpen) panel.style.display = 'none'; }, 300);
+  }
 }
-window.addEventListener('load',()=>{updateEmblemHints();setTimeout(render,400);});
+
+// ④ 캔버스 위 입력창 ↔ 패널 입력창 양방향 동기화
+function syncText(type, val) {
+  if (type === 'kr') {
+    S.krText = val;
+    const p = document.getElementById('kr-text');
+    if (p) p.value = val;
+  } else if (type === 'en') {
+    S.enText = val;
+    const p = document.getElementById('en-text');
+    if (p) p.value = val;
+  } else if (type === 'sl') {
+    S.slText = val;
+    const p = document.getElementById('sl-text');
+    if (p) p.value = val;
+  }
+  render();
+}
+
+function syncTextInputs() {
+  [['kr-text','canvas-kr-text','krText'],
+   ['en-text','canvas-en-text','enText'],
+   ['sl-text','canvas-sl-text','slText']
+  ].forEach(([pid,cid,key]) => {
+    const panel  = document.getElementById(pid);
+    const canvas = document.getElementById(cid);
+    if (panel) panel.addEventListener('input', e => {
+      S[key] = e.target.value;
+      if (canvas) canvas.value = e.target.value;
+      render();
+    });
+  });
+}
+syncTextInputs();
+
+
+window.addEventListener('load', () => {
+  syncTextInputs();
+  updateEmblemHints();
+  setTimeout(render, 400);
+});
+
+// ⑤ 클립보드 복사 (현재 로고를 이미지로 클립보드에 복사)
+async function copyToClipboard() {
+  const btn = document.getElementById('copy-btn');
+  const origText = btn.textContent;
+  btn.textContent = '⏳ 복사 중...';
+  btn.disabled = true;
+  try {
+    const { W, H } = S;
+    const scale = Math.max(Math.ceil(1000/W), 2);
+    // 투명 배경으로 렌더링 (배경 포함 원하면 false로)
+    const canvas = await renderToCanvas(scale, true);
+    canvas.toBlob(async blob => {
+      try {
+        // 최신 브라우저: Clipboard API
+        if (navigator.clipboard && window.ClipboardItem) {
+          await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob })
+          ]);
+          showToast('✓ 클립보드에 복사됐어요! 붙여넣기(Ctrl+V)로 사용하세요');
+        } else {
+          // fallback: PNG 다운로드
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `${(S.krText||'logo').replace(/\s+/g,'_')}_logo.png`;
+          a.click();
+          showToast('클립보드 미지원 — PNG로 저장됐어요');
+        }
+      } catch(e) {
+        showToast('복사 실패 — 브라우저 설정에서 클립보드 권한을 허용해주세요');
+        console.error('clipboard:', e);
+      }
+      btn.textContent = origText;
+      btn.disabled = false;
+    }, 'image/png');
+  } catch(e) {
+    btn.textContent = origText;
+    btn.disabled = false;
+    showToast('복사 실패');
+    console.error(e);
+  }
+}
 </script>
 </body>
 </html>
